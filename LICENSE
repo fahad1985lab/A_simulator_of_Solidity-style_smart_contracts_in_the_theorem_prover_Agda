@@ -682,7 +682,7 @@ Public License instead of this License.  But first, please read
 
 The following files are modified versions taken from <https://github.com/agda/ooAgda>
 Base.agda, Console.agda, ConsoleLib.agda, Interface.agda, NativeInt.agda, NativeIO.agda, Object.agda, and Unit.agda
-They are subject to the following license:
+They are subject to the following licence:
 
 Copyright (c) 2009, 2016 Andreas Abel, Stephan Adelsberger, Shenggang Chen, 
                          Anton Setzer
