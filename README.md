@@ -43,10 +43,10 @@
     * Select: `Option 3`, to change the calling address by entering a new calling address, `1`\
       and then calling the `increment` function with argument `0`.\
       The result will be `nat 1`.
-    * Select: `Option 1`, to check function `counter` at address `1` after increment our counter.\
+    * Select: `Option 1`, to check function `counter` at address `1` after incrementing our counter.\
       The result will be `nat 1`.
-      
 
+![simple](https://github.com/fahad1985lab/A_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda/assets/77390330/61be8b16-f439-42ff-9dd3-5aae978b9eb8)
 
 
 
@@ -72,7 +72,10 @@
     * Select: `Option 6`, to check the pure function `counter`,\
       	      and we get `theMsg 1`, i.e. number of votes is 1.
     * Select: `Option 1`, to try to vote again (argument `nat 1`),\
-      	      and this time we get an error, because voter 1 is no longer allowed to vote.
+      	      and this time, we get an error, because voter 1 is no longer allowed to vote.
+
+![complex](https://github.com/fahad1985lab/A_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda/assets/77390330/4d665b68-0bc9-416c-a0f2-4a285d601a34)
+  
 
 
 
