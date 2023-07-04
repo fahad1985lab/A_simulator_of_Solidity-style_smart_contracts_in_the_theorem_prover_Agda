@@ -46,8 +46,7 @@
     * Select: `Option 1`, to check function `counter` at address `1` after incrementing our counter.\
       The result will be `nat 1`.
 
-![simple](https://github.com/fahad1985lab/A_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda/assets/77390330/61be8b16-f439-42ff-9dd3-5aae978b9eb8)
-
+![simple](https://github.com/fahad1985lab/A_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda/assets/77390330/3091812b-4412-4be7-8bef-ecc2fd5de0fb)
 
 
 
@@ -74,7 +73,7 @@
     * Select: `Option 1`, to try to vote again (argument `nat 1`),\
       	      and this time, we get an error, because voter 1 is no longer allowed to vote.
 
-![complex](https://github.com/fahad1985lab/A_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda/assets/77390330/4d665b68-0bc9-416c-a0f2-4a285d601a34)
+![complex](https://github.com/fahad1985lab/A_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda/assets/77390330/840fb1a9-8d17-491a-ab62-c6ad324b4e80)
   
 
 
