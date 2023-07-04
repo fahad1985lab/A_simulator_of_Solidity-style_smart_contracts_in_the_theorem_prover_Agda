@@ -36,9 +36,11 @@ open import Simple-Model.example.examplecounter
 -- Interactive program in Agda for simple simulator
 open import Simple-Model.IOledger.IOledger-counter
 
--- Ledger
+-- definition of Smart Contract (SmartContract), Commands (CCommands), and respones (CResponse)
 open import Simple-Model.ledgerversion.Ledger-Simple-Model
 
+-- Ledger
+open import Simple-Model.ledgerversion.Ledger-Simple-Model
 
 -- library for simple model
 open import Simple-Model.library-simple-model.basicDataStructureWithSimpleModel
@@ -56,15 +58,15 @@ open import Complex-Model.example.votingexample-complex
 open import Complex-Model.IOledger.IOledger-votingexample
 
 -- definition of Smart Contract (SmartContract), Commands (CCommands), and respones (CResponse)
-open import Simple-Model.ledgerversion.Ledger-Simple-Model
+open import Complex-Model.ccomand.ccommands-cresponse
 
 --Ledger
 
 open import Complex-Model.ledgerversion.Ledger-Complex-Model
 open import Complex-Model.ledgerversion.Ledger-Complex-Model-improved-non-terminate
 
--- commands and responses
-open import Complex-Model.ccomand.ccommands-cresponse
-
-
 -- Sect 5 CONCLUSION AND FUTURE WORK
+
+
+
+
