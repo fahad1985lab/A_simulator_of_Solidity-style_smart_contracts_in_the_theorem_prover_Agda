@@ -27,7 +27,7 @@ open import libraries.Mainlibrary
 
 
 --define increment aux
-incrementAux : MsgOrError → SmartContractExec Msg
+incrementAux : MsgOrError → SmartContract Msg
 incrementAux (theMsg (nat n)) = (exec (updatec "counter" (λ _ → λ msg → theMsg (nat (suc n))) λ f → 1)
                                                           (λ n → 1)) λ x → return 1 (nat (suc n))
 incrementAux ow = error (strErr "counter returns not a number") ⟨ 0 >> 0 ∙ "increment" [ (nat 0) ]⟩
@@ -57,7 +57,7 @@ incrementcandidates candidateVotedFor oldCounter (nat candidate) = if candidateV
 incrementcandidates ow ow' ow'' = err (strErr " You cannot delete voter ")
 
 
-incrementAux1 : MsgOrError → SmartContractExec Msg
+incrementAux1 : MsgOrError → SmartContract Msg
 incrementAux1 (theMsg (nat candidate)) = (exec (updatec "counter" (incrementcandidates candidate) λ f → 1)
                                                           (λ n → 1)) λ x → return 1 (nat candidate)
 incrementAux1 ow = error (strErr "counter returns not a number") ⟨ 0 >> 0 ∙ "increment" [ (nat 0) ]⟩
@@ -66,7 +66,7 @@ incrementAux1 ow = error (strErr "counter returns not a number") ⟨ 0 >> 0 ∙ 
 -- the function below we use it in case to check voter is allowed to vote or not
 -- in case nat 0 or otherwise it will return error and not allow to vote
 -- in case suc (nat n) it will allow to vote and it will call incrementAux to increment the counter
-voteAux :  Address → MsgOrError → (candidate : Msg) → SmartContractExec Msg
+voteAux :  Address → MsgOrError → (candidate : Msg) → SmartContract Msg
 voteAux addr (theMsg (nat zero)) candidate = error (strErr "The voter is not allowed to vote")
                                              ⟨ 0 >> 0 ∙ "Voter is not allowed to vote" [ nat 0 ]⟩
 voteAux addr (theMsg (nat (suc n))) candidate = exec (updatec "checkVoter" (deleteVoterAux (nat addr)) λ _ → 1) (λ _ → 1)

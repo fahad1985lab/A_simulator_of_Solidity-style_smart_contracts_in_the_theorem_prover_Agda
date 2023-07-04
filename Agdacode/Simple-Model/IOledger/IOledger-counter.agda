@@ -135,17 +135,14 @@ mutual
 
 
 -- define our interface  
-
-  {-# NON_TERMINATING #-}
-  mainBody : ∀{i} → Ledger → (callAddr : Address)
-           → IOConsole i  Unit
-  mainBody ledger callAddr
-    = WriteString ("Please choose one of them:
+  mainBody : ∀{i} → Ledger → (callAddr : Address) → IOConsole i  Unit
+  mainBody ledger callAddr .force
+    = WriteString' ("Please choose one of them:
                        1- Execute a function of a contract.
                        2- Look up the balance of one contract.
                        3- Change the calling address.
                        4- Terminate the program.")
-   >>= λ str → (GetLine >>= λ str →
+   λ str → (GetLine >>= λ str →
    if str  == "1"
       then executeLedger ledger callAddr
    else (if str == "2"

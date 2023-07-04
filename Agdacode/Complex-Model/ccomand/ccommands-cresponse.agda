@@ -49,21 +49,21 @@ mutual
 
 --SmartContractExec is datatype of what happens when a function is applied to its arguments.
 --SmartContractExec --> SmartContractExec 
-  data SmartContractExec (A : Set) : Set where
-    return  : ℕ → A → SmartContractExec A
-    error   : ErrorMsg → DebugInfo → SmartContractExec A
+  data SmartContract (A : Set) : Set where
+    return  : ℕ → A → SmartContract A
+    error   : ErrorMsg → DebugInfo → SmartContract A
     exec    : (c : CCommands) → (CResponse c → ℕ)
-            → (CResponse c → SmartContractExec A) → SmartContractExec A
+            → (CResponse c → SmartContract A) → SmartContract A
 
 
 
-_>>=_ : {A B : Set} → SmartContractExec A → (A → SmartContractExec B) → SmartContractExec B
+_>>=_ : {A B : Set} → SmartContract A → (A → SmartContract B) → SmartContract B
 return n x >>= q    = q x
 error x z >>= q     = error x z
 exec c n x >>= q  = exec c n (λ r → x r >>= q)
 
 
-_>>_ : {A B : Set} → SmartContractExec A → SmartContractExec B → SmartContractExec B
+_>>_ : {A B : Set} → SmartContract A → SmartContract B → SmartContract B
 return n x >> q   = q
 error x z >> q    = error x z
 exec c n x >> q = exec c n (λ r → x r >> q)

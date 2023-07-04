@@ -22,18 +22,18 @@ open import Simple-Model.IOledger.IOledger-counter
 
 
 --Example of a simple counter
-const : ℕ → (Msg → SmartContractExec Msg)
+const : ℕ → (Msg → SmartContract Msg)
 const n msg = return (nat n)
 
 
 
 mutual
-  contract0 : FunctionName → (Msg → SmartContractExec Msg)
+  contract0 : FunctionName → (Msg → SmartContract Msg)
   contract0 "f1" = const 0
   contract0 "g1" = def-g1
   contract0 ow ow' = error (strErr " Error msg")
 
-  def-g1 : Msg → SmartContractExec Msg
+  def-g1 : Msg → SmartContract Msg
   def-g1 (nat x)  = exec currentAddrLookupc λ addr → call 0 "f1" (nat 0)
   def-g1 (list x) = exec currentAddrLookupc (λ n → exec (updatec "f1" (const (suc n))) λ _ → return (nat n))
     

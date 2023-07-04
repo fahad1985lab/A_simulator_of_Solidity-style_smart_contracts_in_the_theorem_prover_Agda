@@ -27,7 +27,7 @@ mutual
   data CCommands : Set where
     transferc  :  Amount → Address → CCommands
     callc      :  Address → FunctionName → Msg → CCommands
-    updatec    :  FunctionName → (Msg → SmartContractExec Msg) → CCommands
+    updatec    :  FunctionName → (Msg → SmartContract Msg) → CCommands
     currentAddrLookupc  : CCommands
     callAddrLookupc     : CCommands
     getAmountc          : Address → CCommands
@@ -45,20 +45,20 @@ mutual
 
 
 --SmartContractExec is datatype of what happens when a function is applied to its arguments.
-  data SmartContractExec (A : Set) : Set where
-    return  :  A → SmartContractExec A
-    error   :  ErrorMsg → SmartContractExec A
-    exec    :  (c : CCommands) → (CResponse c → SmartContractExec A)
-            → SmartContractExec A
+  data SmartContract (A : Set) : Set where
+    return  :  A → SmartContract A
+    error   :  ErrorMsg → SmartContract A
+    exec    :  (c : CCommands) → (CResponse c → SmartContract A)
+            → SmartContract A
 
 
-_>>==_ : {A B : Set} → SmartContractExec A → (A → SmartContractExec B) → SmartContractExec B
+_>>==_ : {A B : Set} → SmartContract A → (A → SmartContract B) → SmartContract B
 return x >>== q = q x
 error x >>== q = error x
 exec c x >>== q = exec c (λ r → x r >>== q)
 
 
-_>>_ : {A B : Set} → SmartContractExec A → SmartContractExec B → SmartContractExec B
+_>>_ : {A B : Set} → SmartContract A → SmartContract B → SmartContract B
 return x >> q = q
 error x >> q = error x
 exec c x >> q = exec c (λ r → x r >> q)
@@ -70,7 +70,7 @@ record Contract : Set where
   constructor contract
   field
     amount  :  Amount
-    fun     :  FunctionName → (Msg → SmartContractExec Msg)
+    fun     :  FunctionName → (Msg → SmartContract Msg)
 open Contract public
 
 
@@ -81,19 +81,19 @@ Ledger = Address  → Contract
 
 
 --- theses functions below we use them with do notation
-call : Address  → FunctionName → (Msg → SmartContractExec Msg)
+call : Address  → FunctionName → (Msg → SmartContract Msg)
 call addr fname msg = exec (callc addr fname msg) return
 
-update : FunctionName → (Msg → SmartContractExec Msg) → SmartContractExec ⊤
+update : FunctionName → (Msg → SmartContract Msg) → SmartContract ⊤
 update fname fdef = exec (updatec fname fdef) return
 
-currentAddrLookup : SmartContractExec Address
+currentAddrLookup : SmartContract Address
 currentAddrLookup = exec currentAddrLookupc return
 
-callAddrLookup : SmartContractExec Address
+callAddrLookup : SmartContract Address
 callAddrLookup = exec callAddrLookupc return
 
-transfer : Amount → Address → SmartContractExec ⊤
+transfer : Amount → Address → SmartContract ⊤
 transfer amount addr =  exec (transferc amount addr) return
 
 
@@ -104,7 +104,7 @@ record ExecStackEl : Set where
   field
     lastCallAddress  :  Address
     calledAddress    :  Address
-    continuation     :  Msg → SmartContractExec Msg
+    continuation     :  Msg → SmartContract Msg
 open ExecStackEl public
 
 
@@ -129,13 +129,13 @@ record StateExecFun : Set where
     executionStack   :  ExecutionStack
     lastCallAddress  :  Address
     currentAddress   :  Address
-    nextstep         :  SmartContractExec Msg
+    nextstep         :  SmartContract Msg
 open StateExecFun public
 
 
 
 --update ledger
-updateLedger : Ledger →  Address → FunctionName → (Msg → SmartContractExec Msg) → Ledger
+updateLedger : Ledger →  Address → FunctionName → (Msg → SmartContract Msg) → Ledger
 updateLedger ledger changedAddr changedFname f a .amount    = ledger a .amount
 updateLedger ledger changedAddr changedFname f a .fun fname = if (a ≡ᵇ changedAddr) ∧ (fname ≡fun changedFname)
                                                               then f else ledger a .fun fname
@@ -162,7 +162,7 @@ executeTransferAux : (oldLedger currentLedger : Ledger)
                   → (callAddr currentAddr : Address)
                   → (amount' : Amount)
                   → (destinationAddr : Address)
-                  → (cont : SmartContractExec Msg)
+                  → (cont : SmartContract Msg)
                   → (cp  : OrderingLeq amount' (currentLedger currentAddr .amount  ))
                   → StateExecFun
 executeTransferAux oldLedger currentLedger executionStack callAddr currentAddr amount' destinationAddr cont (leq x) =
@@ -179,7 +179,7 @@ executeTransfer : (oldLedger currentLedger : Ledger)
                   → (callAddr currentAddr : Address)
                   → (amount' : Amount)
                   → (destinationAddr : Address)
-                  → (cont : SmartContractExec Msg)
+                  → (cont : SmartContract Msg)
                   → StateExecFun
 executeTransfer oldLedger currentLedger exexecutionStack callAddr currentAddr amount' destinationAddr cont
                 = executeTransferAux oldLedger currentLedger exexecutionStack callAddr currentAddr amount'
