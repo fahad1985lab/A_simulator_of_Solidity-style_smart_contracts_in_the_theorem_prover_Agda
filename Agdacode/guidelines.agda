@@ -26,7 +26,6 @@ open import interface.Base
 open import interface.Console 
 
 
-
 -- Sect 4 A SIMULATOR OF SOLIDITY-STYLE SMART CONTRACTS IN AGDA
 
 --- Subsection 4.1 Simulator of the simple model
