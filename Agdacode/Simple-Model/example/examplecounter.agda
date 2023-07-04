@@ -58,7 +58,7 @@ testLedger 1 .fun "increment" m  = exec currentAddrLookupc  λ addr →
 testLedger 1 .fun "transfer" m  = exec (transferc 10  0) λ _ → return m
 
 testLedger ow .amount           = 0
-testLedger ow .fun ow' ow''  = error (strErr "Undefined")
+testLedger ow .fun ow' ow''     = error (strErr "Undefined")
 
 
 -- To run IO

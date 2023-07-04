@@ -11,6 +11,9 @@ open import Data.List
 -- begin modification of ooAgda library  (replacing ∞ by a hidden parameter i)
 WriteString : ∀{i} →  (s : String) → IOConsole i Unit
 WriteString s = Exec (putStrLn s)
+
+WriteStringWithCont : ∀{i} →  (s : String) → (Unit → IO consoleI i Unit) → IOConsole i Unit
+WriteStringWithCont s cont .force = exec' (putStrLn s) cont
 -- end modification of ooAgda library
 
 -- addition to the ooAgda library

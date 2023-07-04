@@ -94,6 +94,7 @@ testLedger 1 .fun "vote" msg        = exec callAddrLookupc  (λ _ → 1)
 testLedger 1 .purefunction "counter" msg     = theMsg (nat 0)
 testLedger 1 .purefunction "checkVoter" msg  = theMsg (nat 0)
 
+testLedger 0 .amount   = 100
 testLedger 3 .amount   = 100
 
 testLedger ow .amount  = 0

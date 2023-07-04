@@ -56,6 +56,9 @@ open import Complex-Model.example.votingexample-complex
 
 open import Complex-Model.IOledger.IOledger-votingexample
 
+-- definition of Smart Contract (SmartContract), Commands (CCommands), and respones (CResponse)
+open import Simple-Model.ledgerversion.Ledger-Simple-Model
+
 --Ledger
 
 open import Complex-Model.ledgerversion.Ledger-Complex-Model

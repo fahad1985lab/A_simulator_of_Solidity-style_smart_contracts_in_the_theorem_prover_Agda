@@ -60,21 +60,20 @@ mutual
 
   executeLedgerStep1-2    : ∀{i} → StateIO → Maybe ℕ → IOConsole i Unit  
   executeLedgerStep1-2 stIO (just calledAddr) .force =
-                                        exec' (putStrLn "Enter the function name as addVoter, deleteVoter, or vote")
+                                        exec' (putStrLn "Enter the function name (e.g. addVoter, deleteVoter, vote)")
                                          λ _ → IOexec getLine  
-                                         λ line → executeLedgerStep1-3 stIO calledAddr (string2FunctionName line)
+                                         λ line → executeLedgerStep1-3 stIO calledAddr line
   executeLedgerStep1-2 stIO nothing .force =
                                           exec' (putStrLn "Please enter an address as a natural number")
                                           λ _ → executeLedger stIO
 
 
  
-  executeLedgerStep1-3    : ∀{i} → StateIO → ℕ → Maybe FunctionName → IOConsole i Unit 
-  executeLedgerStep1-3 stIO calledAddr (just f) .force = exec' (putStrLn "Enter the argument of the function name as a natural number")
-                                                         λ _ → IOexec getLine
-                                                         λ line →  executeLedgerStep1-4 stIO calledAddr f (readMaybe 10 line)
-  executeLedgerStep1-3 stIO calledAddr nothing  .force = exec' (putStrLn "Please enter a function name as addVoter, deleteVoter, or vote")
-                                                         λ _ → executeLedgerStep1-2 stIO (just calledAddr)
+  executeLedgerStep1-3    : ∀{i} → StateIO → ℕ → FunctionName → IOConsole i Unit 
+  executeLedgerStep1-3 stIO calledAddr f .force =
+                                                exec' (putStrLn "Enter the argument of the function name as a natural number")
+                                                λ _ → IOexec getLine  λ line →
+                                                executeLedgerStep1-4 stIO calledAddr f (readMaybe 10 line)
 
 
   executeLedgerStep1-4    : ∀{i} → StateIO → ℕ → FunctionName → Maybe ℕ → IOConsole i Unit
@@ -86,7 +85,7 @@ mutual
                                            (⟨ ledger ledger, initialAddr initialAddr, gas gas⟩)
   executeLedgerStep1-4 stIO calledAddr f nothing  .force
                                         = exec' (putStrLn "Enter the argument of the function name as a natural number")
-                                        λ _ →  executeLedgerStep1-3 stIO  calledAddr (just f)
+                                        λ _ →  executeLedgerStep1-3 stIO  calledAddr f
 
 
   executeLedgerFinalStep  : ∀{i} → Maybe (Ledger × MsgOrErrorWithGas) → StateIO  → IO consoleI i Unit  
@@ -214,7 +213,7 @@ mutual
   
   executeLedger-purefunStep1-2 : ∀{i} → StateIO  → Maybe Address → IOConsole i Unit
   executeLedger-purefunStep1-2 stIO (just calledAddr) .force =
-                             exec' (putStrLn "Enter the pure function as counter or checkVoter")
+                             exec' (putStrLn "Enter the function name (e.g. checkVoter, counter) ")
                              λ _ → IOexec getLine λ line →  
                              executeLedger-purefunStep1-3 stIO calledAddr (string2FunctionName line)
   executeLedger-purefunStep1-2 stIO nothing .force =
@@ -229,7 +228,7 @@ mutual
                               λ _ → IOexec getLine λ line →  
                               executeLedger-purefunStep1-4 stIO calledAddr f (readMaybe 10 line)
   executeLedger-purefunStep1-3 stIO calledAddr nothing  .force
-                            = exec' (putStrLn "Please enter a functionname as string")
+                            = exec' (putStrLn "Please enter a function name as string")
                               λ _ → executeLedger-purefunStep1-2 stIO (just calledAddr)
 
 
@@ -250,24 +249,26 @@ mutual
 -- define our interface
   mainBody : ∀{i} → StateIO → IOConsole i Unit
   mainBody stIO .force
-    = WriteString' ("Please choose one of them:
-                    1- Execute a function of a contract.
-                    2- Look up the balance of one contract.
-                    3- Change the calling address.
-                    4- Update the gas limit.
-                    5- Check the gas limit.
-                    6- Check the pure function.
-                    7- Terminate the program.") λ _ → 
-     (GetLine >>= λ str →
-     if str  == "1" then executeLedger stIO
-     else (if str == "2" then  executeLedger-CheckBalance stIO
-     else (if str == "3" then executeLedger-ChangeCallingAddress stIO
-     else (if str == "4" then executeLedger-updateGas stIO
-     else (if str == "5" then executeLedger-checkGas stIO
-     else (if str == "6" then executeLedger-purefunction stIO
-     else (if str == "7" then WriteString "The program is terminated"
-     else mainBody stIO)))))))
+    = WriteString' ("Please choose one of the following:
+                 1- Execute a function of a contract.
+                 2- Look up the balance of a contract.
+                 3- Change the calling address.
+                 4- Update the gas limit.
+                 5- Check the gas limit.
+                 6- Evaluate a pure function.
+                 7- Terminate the program.")  λ _ →
+     GetLine >>= λ str →
+     if    str  == "1" then executeLedger stIO
+     else  (if  str == "2" then  executeLedger-CheckBalance stIO
+     else  (if  str == "3" then  executeLedger-ChangeCallingAddress stIO
+     else  (if  str == "4" then  executeLedger-updateGas stIO
+     else  (if  str == "5" then  executeLedger-checkGas stIO
+     else  (if  str == "6" then  executeLedger-purefunction stIO
+     else  (if  str == "7" then  WriteString "The program will be terminated"
+     else  WriteStringWithCont   "Please enter a number 1 - 7"
+     λ _ →  mainBody stIO ))))))
 
-
+-- The main function is defined in the example files e.g.
+-- Agdacode/agda/Complex-Model/example/votingexample-complex.agda
 
 
