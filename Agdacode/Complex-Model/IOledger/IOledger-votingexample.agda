@@ -257,17 +257,15 @@ mutual
                     4- Update the gas limit.
                     5- Check the gas limit.
                     6- Check the pure function.
-                    7- Terminate the program.")
-     λ str → (GetLine >>= λ str →
+                    7- Terminate the program.") λ _ → 
+     (GetLine >>= λ str →
      if str  == "1" then executeLedger stIO
      else (if str == "2" then  executeLedger-CheckBalance stIO
-     else (if str == "3"
-                  then executeLedger-ChangeCallingAddress stIO
+     else (if str == "3" then executeLedger-ChangeCallingAddress stIO
      else (if str == "4" then executeLedger-updateGas stIO
      else (if str == "5" then executeLedger-checkGas stIO
      else (if str == "6" then executeLedger-purefunction stIO
-     else (if str == "7"
-                  then WriteString "The program is terminated"
+     else (if str == "7" then WriteString "The program is terminated"
      else mainBody stIO)))))))
 
 

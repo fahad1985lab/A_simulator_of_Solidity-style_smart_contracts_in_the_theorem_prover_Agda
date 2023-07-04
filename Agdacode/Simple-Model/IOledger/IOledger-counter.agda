@@ -27,7 +27,7 @@ open import interface.ConsoleLib
 
 -- string to function name
 string2FunctionName : String → Maybe FunctionName
-string2FunctionName str = if str  == "constnum"  then just "constnum"  else
+string2FunctionName str = if str  == "counter"  then just "counter"  else
                           (if str == "increment" then just "increment" else
                           (if str == "transfer"  then just "transfer"  else
                           nothing))
@@ -53,14 +53,14 @@ mutual
                      λ _ → IOexec getLine
                      λ _ →  executeLedger ledger callAddr
   executeLedgerStep2 ledger callAddr (just n) .force
-   = exec' (putStrLn "Enter a function name as constnum, increment, or transfer")
+   = exec' (putStrLn "Enter a function name as counter, increment, or transfer")
      λ _ → IOexec getLine 
      λ line → executeLedgerStep3 ledger callAddr n (string2FunctionName line)
 
   
   executeLedgerStep3 : ∀{i} → Ledger → (callAddr : Address) → ℕ → Maybe FunctionName → IOConsole i Unit
   executeLedgerStep3 ledger callAddr n nothing .force
-   = exec' (putStrLn "Enter a function name as constnum, increment, or transfer")
+   = exec' (putStrLn "Enter a function name as counter, increment, or transfer")
      λ _ → IOexec getLine
      λ _ → executeLedgerStep2 ledger callAddr (just n)
   

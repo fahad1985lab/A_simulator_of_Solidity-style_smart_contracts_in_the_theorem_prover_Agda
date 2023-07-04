@@ -49,12 +49,12 @@ testLedger 0 .fun  ow ow' = error (strErr "Undefined")
 
 -- the example belw we used in our paper
 testLedger 1 .amount             = 40
-testLedger 1 .fun "constnum" m   = const 0 (nat 0)
+testLedger 1 .fun "counter" m   = const 0 (nat 0)
 testLedger 1 .fun "increment" m  = exec currentAddrLookupc  λ addr →
-                                   exec (callc addr "constnum" (nat 0))
-                                   λ{(nat n) → exec (updatec "constnum" (const (suc n)))
+                                   exec (callc addr "counter" (nat 0))
+                                   λ{(nat n) → exec (updatec "counter" (const (suc n)))
                                              λ _ → return (nat (suc n));
-                                  _        → error (strErr "constnum returns not a number")}
+                                  _        → error (strErr "counter returns not a number")}
 testLedger 1 .fun "transfer" m  = exec (transferc 10  0) λ _ → return m
 
 testLedger ow .amount           = 0
