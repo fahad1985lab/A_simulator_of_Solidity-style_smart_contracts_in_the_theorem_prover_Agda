@@ -35,11 +35,12 @@
 
 * Simple Blockchain simulator (a count example):
 
-    * Select: `Option 1`, to execute a function at address `1`, `constnum` function with argument `1`. The result will be `nat 0` (return the constant variable). 
+    * Select: `Option 1`, to execute a function at address `1`, `counter` function with argument `1`. The result will be `nat 0` (return the constant variable). 
     * Select: `Option 2`, to check a balance at address `1`. Then it will return the balance in address `1`, which is 40 wei.
-    * Select: `Option 3`, to change the calling address by entering a new calling address `1`, with `increment` function with argument `0`. The result will be `nat 1`.
+    * Select: `Option 3`, to change the calling address by entering a new calling address, `1`, with the `increment` function with argument `0`. The result will be `nat 1`.
       
-![simple](https://github.com/fahad1985lab/A_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda/assets/77390330/e79e4407-14bc-4714-ac39-f4c3ad9e3a41)
+![simple](https://github.com/fahad1985lab/A_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda/assets/77390330/f0c73ffc-206b-4e34-94c9-6e0ffce48041)
+
 
 
 
