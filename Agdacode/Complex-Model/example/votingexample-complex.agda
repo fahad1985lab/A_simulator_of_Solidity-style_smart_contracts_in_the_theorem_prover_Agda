@@ -34,13 +34,20 @@ incrementAux ow = error (strErr "counter returns not a number") ⟨ 0 >> 0 ∙ "
 
 --add voter function
 addVoterAux : Msg → (Msg → MsgOrError) → Msg → MsgOrError
-addVoterAux (nat newaddr) oldCheckVoter (nat addr) = if newaddr ≡ᵇ addr then theMsg (nat 1) else oldCheckVoter (nat addr)
-addVoterAux ow ow' ow'' = err (strErr " You cannot add voter ")
+addVoterAux (nat newaddr) oldCheckVoter (nat addr) =
+    if    newaddr ≡ᵇ addr
+    then  theMsg (nat 1) -- return 1 for true
+    else  oldCheckVoter (nat addr)
+addVoterAux ow ow' ow'' =
+    err (strErr " You cannot add voter ")
 
 
 --delete voter function
 deleteVoterAux : Msg → (Msg → MsgOrError) → (Msg → MsgOrError)
-deleteVoterAux (nat newaddr) oldCheckVoter (nat addr) = if newaddr ≡ᵇ addr then theMsg (nat 0) else oldCheckVoter (nat addr)
+deleteVoterAux (nat newaddr) oldCheckVoter (nat addr) =
+     if newaddr ≡ᵇ addr
+     then theMsg (nat 0) --return 0 for true (means delete)  
+     else oldCheckVoter (nat addr)
 deleteVoterAux ow ow' ow'' = err (strErr " You cannot delete voter ")
 
 
