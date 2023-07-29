@@ -69,7 +69,7 @@
 <a id="2053" href="libraries.IOlibrary.html#1596" class="Function">errorMsg2Str</a> <a id="2066" href="basicDataStructure.html#1161" class="InductiveConstructor">invalidtransaction</a> <a id="2085" class="Symbol">=</a> <a id="2087" class="String">&quot;invalidtransaction&quot;</a>
 
 
-<a id="checkamount"></a><a id="2110" href="libraries.IOlibrary.html#2110" class="Function">checkamount</a> <a id="2122" class="Symbol">:</a> <a id="2124" href="libraries.Mainlibrary.html#1008" class="Function">Ledger</a> <a id="2131" class="Symbol">→</a> <a id="2133" href="basicDataStructure.html#405" class="Function">Address</a> <a id="2141" class="Symbol">→</a> <a id="2143" href="Agda.Builtin.Nat.html#192" class="Datatype">ℕ</a>
+<a id="checkamount"></a><a id="2110" href="libraries.IOlibrary.html#2110" class="Function">checkamount</a> <a id="2122" class="Symbol">:</a> <a id="2124" href="libraries.Mainlibrary.html#1075" class="Function">Ledger</a> <a id="2131" class="Symbol">→</a> <a id="2133" href="basicDataStructure.html#405" class="Function">Address</a> <a id="2141" class="Symbol">→</a> <a id="2143" href="Agda.Builtin.Nat.html#192" class="Datatype">ℕ</a>
 <a id="2145" href="libraries.IOlibrary.html#2110" class="Function">checkamount</a> <a id="2157" href="libraries.IOlibrary.html#2157" class="Bound">ledger</a> <a id="2164" href="libraries.IOlibrary.html#2164" class="Bound">addr</a> <a id="2169" class="Symbol">=</a> <a id="2171" href="libraries.IOlibrary.html#2157" class="Bound">ledger</a> <a id="2178" href="libraries.IOlibrary.html#2164" class="Bound">addr</a> <a id="2183" class="Symbol">.</a><a id="2184" href="libraries.Mainlibrary.html#839" class="Field">amount</a>
 
 
@@ -79,7 +79,7 @@
 <a id="2218" class="Keyword">record</a> <a id="StateIO"></a><a id="2225" href="libraries.IOlibrary.html#2225" class="Record">StateIO</a>  <a id="2234" class="Symbol">:</a> <a id="2236" href="Agda.Primitive.html#326" class="Primitive">Set</a>  <a id="2241" class="Keyword">where</a>
        <a id="2254" class="Keyword">constructor</a> <a id="⟨_ledger,_initialAddr,_gas⟩"></a><a id="2266" href="libraries.IOlibrary.html#2266" class="InductiveConstructor Operator">⟨_ledger,_initialAddr,_gas⟩</a>
        <a id="2301" class="Keyword">field</a>
-        <a id="StateIO.ledger"></a><a id="2315" href="libraries.IOlibrary.html#2315" class="Field">ledger</a>       <a id="2328" class="Symbol">:</a> <a id="2330" href="libraries.Mainlibrary.html#1008" class="Function">Ledger</a>
+        <a id="StateIO.ledger"></a><a id="2315" href="libraries.IOlibrary.html#2315" class="Field">ledger</a>       <a id="2328" class="Symbol">:</a> <a id="2330" href="libraries.Mainlibrary.html#1075" class="Function">Ledger</a>
         <a id="StateIO.initialAddr"></a><a id="2345" href="libraries.IOlibrary.html#2345" class="Field">initialAddr</a>  <a id="2358" class="Symbol">:</a> <a id="2360" href="basicDataStructure.html#405" class="Function">Address</a>
         <a id="StateIO.gas"></a><a id="2376" href="libraries.IOlibrary.html#2376" class="Field">gas</a>          <a id="2389" class="Symbol">:</a> <a id="2391" href="Agda.Builtin.Nat.html#192" class="Datatype">ℕ</a>
 <a id="2393" class="Keyword">open</a> <a id="2398" href="libraries.IOlibrary.html#2225" class="Module">StateIO</a> <a id="2406" class="Keyword">public</a>

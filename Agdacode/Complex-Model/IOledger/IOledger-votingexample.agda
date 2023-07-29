@@ -238,7 +238,8 @@ mutual
                                     = exec' (putStrLn "The information you get is below:  ")
                                     λ _ → IOexec (putStrLn ("\n The initial address is " ++ show initialAddr ++
                                     "\n The called address is "  ++ show calledAddr ++
-                                    "\n The pure function returns " ++ initialfun2Str (ledger calledAddr .purefunction f (nat m))))
+                                    "\n The pure function returns " ++ initialfun2Str (ledger calledAddr .purefunction f (nat m)) ++
+                                    "\n The pure function cost returns " ++ show (ledger calledAddr .purefunctionCost f (nat m))))
                                     λ _ →  mainBody (⟨ ledger ledger, initialAddr initialAddr, gas gas⟩)
   executeLedger-purefunStep1-4 stIO calledAddr f nothing  .force
                                     = exec' (putStrLn "Please enter the argument of the function name as a natural number") λ _ →

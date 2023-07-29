@@ -30,8 +30,12 @@ record Contract : Set where
   constructor contract
   field
     amount       : Amount
-    fun          : FunctionName → (Msg → SmartContract Msg)  
-    purefunction : FunctionName → Msg → MsgOrError
+    fun          : FunctionName
+       → (Msg → SmartContract Msg)  
+    purefunction : FunctionName
+       → Msg → MsgOrError
+    purefunctionCost : FunctionName
+       → Msg → ℕ
 open Contract public
 
 

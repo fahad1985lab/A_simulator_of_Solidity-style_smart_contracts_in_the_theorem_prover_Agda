@@ -28,7 +28,7 @@ open import libraries.Mainlibrary
 
 --define increment aux
 incrementAux : MsgOrError → SmartContract Msg
-incrementAux (theMsg (nat n)) = (exec (updatec "counter" (λ _ → λ msg → theMsg (nat (suc n))) λ f → 1)
+incrementAux (theMsg (nat n)) = (exec (updatec "counter" (λ _ → λ msg → theMsg (nat (suc n))) λ f _ _ → 1)
                                                           (λ n → 1)) λ x → return 1 (nat (suc n))
 incrementAux ow = error (strErr "counter returns not a number") ⟨ 0 >> 0 ∙ "increment" [ (nat 0) ]⟩
 
@@ -65,7 +65,7 @@ incrementcandidates ow ow' ow'' = err (strErr " You cannot delete voter ")
 
 
 incrementAux1 : MsgOrError → SmartContract Msg
-incrementAux1 (theMsg (nat candidate)) = (exec (updatec "counter" (incrementcandidates candidate) λ f → 1)
+incrementAux1 (theMsg (nat candidate)) = (exec (updatec "counter" (incrementcandidates candidate) λ f _ _ → 1)
                                                           (λ n → 1)) λ x → return 1 (nat candidate)
 incrementAux1 ow = error (strErr "counter returns not a number") ⟨ 0 >> 0 ∙ "increment" [ (nat 0) ]⟩
 
@@ -76,7 +76,7 @@ incrementAux1 ow = error (strErr "counter returns not a number") ⟨ 0 >> 0 ∙ 
 voteAux :  Address → MsgOrError → (candidate : Msg) → SmartContract Msg
 voteAux addr (theMsg (nat zero)) candidate = error (strErr "The voter is not allowed to vote")
                                              ⟨ 0 >> 0 ∙ "Voter is not allowed to vote" [ nat 0 ]⟩
-voteAux addr (theMsg (nat (suc n))) candidate = exec (updatec "checkVoter" (deleteVoterAux (nat addr)) λ _ → 1) (λ _ → 1)
+voteAux addr (theMsg (nat (suc n))) candidate = exec (updatec "checkVoter" (deleteVoterAux (nat addr)) λ _ _ _ → 1) (λ _ → 1)
                                                 (λ x → (incrementAux1 (theMsg candidate)))
    
 voteAux addr (theMsg ow) candidate  = error (strErr "The message is not a number")
@@ -91,15 +91,16 @@ voteAux addr (err x) candidate      = error (strErr " Undefined ")
 -- Example
 testLedger : Ledger
 testLedger 1 .amount = 100
-testLedger 1 .fun "addVoter" msg    = exec (updatec "checkVoter" (addVoterAux msg) λ _ → 1)
+testLedger 1 .fun "addVoter" msg    = exec (updatec "checkVoter" (addVoterAux msg) λ _ _ _ → 1)
                                       (λ _ → 1) λ _ → return 1 msg
-testLedger 1 .fun "deleteVoter" msg = exec (updatec "checkVoter" (deleteVoterAux msg) λ _ → 1)
+testLedger 1 .fun "deleteVoter" msg = exec (updatec "checkVoter" (deleteVoterAux msg) λ _ _ _ → 1)
                                       (λ _ → 1) λ _ → return 1 msg
 testLedger 1 .fun "vote" msg        = exec callAddrLookupc  (λ _ → 1)
                                       λ addr → exec (callPure addr "checkVoter" (nat addr))
                                       (λ _ → 1) λ check → voteAux addr check msg
 testLedger 1 .purefunction "counter" msg     = theMsg (nat 0)
 testLedger 1 .purefunction "checkVoter" msg  = theMsg (nat 0)
+testLedger 1 .purefunctionCost "checkVoter" msg = 1
 
 testLedger 0 .amount   = 100
 testLedger 3 .amount   = 100
@@ -107,7 +108,7 @@ testLedger 3 .amount   = 100
 testLedger ow .amount  = 0
 testLedger ow .fun ow' ow'' = error (strErr "Undefined") ⟨ ow >> ow ∙ ow' [ ow'' ]⟩
 testLedger ow .purefunction ow' ow'' = err (strErr "Undefined")
-
+testLedger ow .purefunctionCost ow' ow'' = 1
 
 --main program IO
 

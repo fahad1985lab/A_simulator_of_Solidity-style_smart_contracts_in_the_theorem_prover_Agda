@@ -23,8 +23,9 @@ mutual
 --smart contract commands  
   data CCommands : Set where
     callPure   : Address → FunctionName → Msg → CCommands 
-    updatec    : FunctionName → ((Msg → MsgOrError) → (Msg → MsgOrError))
-               → ((Msg → MsgOrError) → ℕ) → CCommands
+    updatec    : FunctionName → ((Msg → MsgOrError)
+               → (Msg → MsgOrError)) → ((Msg → MsgOrError)
+               → (Msg → ℕ) → Msg → ℕ) → CCommands
     raiseException : ℕ → String → CCommands 
     transferc  : Amount → Address → CCommands
     callc      : Address → FunctionName → Msg → CCommands

@@ -20,21 +20,27 @@ open import Data.Empty
 open import Complex-Model.ccomand.ccommands-cresponse
 open import basicDataStructure
 open import libraries.natCompare
-open import Complex-Model.ccomand.do-notation param
+--open import Complex-Model.ccomand.do-notation param
 open import libraries.Mainlibrary
 
 
 
 
 -- update pure function in the ledger
-updateLedgerpurefun : Ledger → Address → FunctionName
-                   → ((Msg → MsgOrError) → (Msg → MsgOrError))
-                   → Ledger
-updateLedgerpurefun ledger changedAddr changedFname f a .amount = ledger a .amount
-updateLedgerpurefun ledger changedAddr changedFname f a .fun  = ledger a .fun
-updateLedgerpurefun ledger changedAddr changedFname f a .purefunction fname =
-                               if (changedFname ≡fun fname) then  f (ledger a .purefunction fname)
-                               else  ledger a .purefunction fname
+updateLedgerpurefun : Ledger → Address
+       → FunctionName
+       → ((Msg → MsgOrError) → (Msg → MsgOrError))
+       → ((Msg → MsgOrError) → (Msg → ℕ) → Msg → ℕ)
+       → Ledger
+updateLedgerpurefun ledger changedAddr changedFname f g a .amount = ledger a .amount
+updateLedgerpurefun ledger changedAddr changedFname f g a .fun  = ledger a .fun
+updateLedgerpurefun ledger changedAddr changedFname f g a .purefunction fname =
+       if (changedFname ≡fun fname) then  f (ledger a .purefunction fname)
+                         else  ledger a .purefunction fname
+updateLedgerpurefun ledger changedAddr changedFname f g a .purefunctionCost fname =
+          if (changedFname ≡fun fname) then  g (ledger a .purefunction fname) (ledger a .purefunctionCost fname)
+                         else  ledger a .purefunctionCost fname
+
 
 
 --update ledger amount
@@ -48,9 +54,12 @@ updateLedgerAmount ledger calledAddr destinationAddr amount' correctAmount addr 
      else (if addr ≡ᵇ destinationAddr
      then ledger destinationAddr .amount + amount'
        else ledger addr .amount)
-updateLedgerAmount ledger calledAddr newAddr amount' correctAmount addr .fun          =  ledger addr .fun
+updateLedgerAmount ledger calledAddr newAddr amount' correctAmount addr .fun
+     =  ledger addr .fun
 
-updateLedgerAmount ledger calledAddr newAddr amount' correctAmount addr .purefunction = ledger addr .purefunction
+updateLedgerAmount ledger calledAddr newAddr amount' correctAmount addr .purefunction
+     = ledger addr .purefunction
+updateLedgerAmount ledger calledAddr newAddr amount' correctAmount addr .purefunctionCost = ledger addr .purefunctionCost
 
 
 
@@ -68,6 +77,8 @@ deductGasFromLedger ledger calledAddr gascost correctAmount addr .fun
     = ledger addr .fun
 deductGasFromLedger ledger calledAddr gascost correctAmount addr .purefunction
     = ledger addr .purefunction
+deductGasFromLedger ledger calledAddr gascost correctAmount addr .purefunctionCost
+    = ledger addr .purefunctionCost
 
 
 -- this function below we use it to refuend in two cases with steEF
@@ -84,6 +95,7 @@ addWeiToLedger ledger address amount' addr .fun
        =   ledger addr .fun
 addWeiToLedger ledger address amount' addr .purefunction
        = ledger addr .purefunction
+addWeiToLedger ledger address amount' addr .purefunctionCost = ledger addr .purefunctionCost
 
 
 -- execute transfer auxiliary
@@ -168,9 +180,11 @@ stepEF oldLedger (stateEF currentLedger executionStack initialAddr lastCallAddr 
           gasLeft  funNameevalState msgevalState
 
 stepEF oldLedger (stateEF currentLedger executionStack initialAddr lastCallAddr calledAddr
-                 (exec (updatec changedFname changedPFun cost) costcomputecont cont) gasLeft funNameevalState msgevalState)
-       = stateEF (updateLedgerpurefun currentLedger calledAddr changedFname  changedPFun)
-          executionStack initialAddr lastCallAddr calledAddr (cont tt) gasLeft funNameevalState msgevalState
+                 (exec (updatec changedFname changedPFun cost) costcomputecont cont)
+                 gasLeft  funNameevalState msgevalState)
+       = stateEF (updateLedgerpurefun currentLedger calledAddr changedFname  changedPFun cost)
+          executionStack initialAddr lastCallAddr calledAddr (cont tt) gasLeft
+            funNameevalState msgevalState
 
 stepEF oldLedger (stateEF currentLedger executionStack initialAddr oldlastCallAddr oldcalledAddr
                  (exec (callc newaddr fname msg) costcomputecont cont) gasLeft funNameevalState msgevalState)
@@ -289,7 +303,7 @@ stepEFgasNeeded (stateEF currentLedger executionStack initialAddr lastCallAddr c
 stepEFgasNeeded (stateEF currentLedger executionStack initialAddr lastCallAddr calledAddr
                  (exec (updatec changedFname changedPufun cost) costcomputecont cont)
                  gasLeft  funNameevalState msgevalState)
-       = cost (currentLedger calledAddr .purefunction changedFname) + (costcomputecont tt)
+       = cost (currentLedger calledAddr .purefunction changedFname) (currentLedger calledAddr .purefunctionCost changedFname) msgevalState + (costcomputecont tt)
 
 
 stepEFgasNeeded (stateEF currentLedger executionStack initialAddr oldlastCallAddr oldcalledAddr
@@ -316,7 +330,7 @@ stepEFgasNeeded (stateEF ledger executionStack initialAddr lastCallAddr calledAd
 stepEFgasNeeded (stateEF currentLedger executionStack initialAddr lastCallAddr calledAddr
                  (exec (callPure addr fname msg) costcompute cont)
                  gasLeft  funNameevalState msgevalState)
-       = costcompute (currentLedger calledAddr .purefunction fname msg)
+       = (currentLedger calledAddr .purefunctionCost fname msg) + costcompute (currentLedger calledAddr .purefunction fname msg)
 
 
 stepEFgasNeeded (stateEF currentLedger executionStack initialAddr lastCallAddr calledAddr
