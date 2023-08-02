@@ -58,13 +58,17 @@ mutual
 -- msg2string (list ((nat 3)  ∷ ((nat 7) +msg (nat 8) ) ∷ []))
 --    "[(nat 3) , ((nat 7) , (nat 8))]"
 
+--Error to String
+error2Str : ErrorMsg → String
+error2Str (strErr s)  = s
+error2Str (numErr n)  = "Number error (" ++ show n  ++ ")" 
+error2Str undefined = "Error undefined"
+error2Str outOfGasError = "Out of gas error"
 
+--ErrorMsg to String
 errorMsg2Str : NatOrError → String
 errorMsg2Str (nat n) = show n
-errorMsg2Str (err (strErr s) ⟨ lastcalladdr >> curraddr ∙ lastfunname [ lastmsg ]⟩) = s
-errorMsg2Str (err (numErr n) ⟨ lastcalladdr >> curraddr ∙ lastfunname [ lastmsg ]⟩) = show n
-errorMsg2Str (err undefined ⟨ lastcalladdr >> curraddr ∙ lastfunname [ lastmsg ]⟩) = "Error undefined"
-errorMsg2Str (err outOfGasError ⟨ lastcalladdr >> curraddr ∙ lastfunname [ lastmsg ]⟩) = "Out of gas error"
+errorMsg2Str (err e ⟨ lastcalladdr >> curraddr ∙ lastfunname [ lastmsg ]⟩) = error2Str e
 errorMsg2Str invalidtransaction = "invalidtransaction"
 
 
