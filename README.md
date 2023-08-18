@@ -16,11 +16,13 @@
  
  
 * Licensed under a [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html).
- 
+
+
 ## Appendix to a simulator of Solidity-style smart contracts in the
 theorem prover Agda:
 
-* In this appendix, we explain the translation of Solidity into Agda.
+* In this appendix, we explain the translation of Solidity into Agda [link](https://github.com/fahad1985lab/A_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda/blob/main/Appendix_to_a_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda.pdf).
+
 
 ## Previous publications:
  
