@@ -17,6 +17,11 @@
  
 * Licensed under a [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html).
  
+## Appendix to a simulator of Solidity-style smart contracts in the
+theorem prover Agda:
+
+* In this appendix, we explain the translation of Solidity into Agda.
+
 ## Previous publications:
  
 * The first paper ( Verification of Bitcoin Script in Agda Using Weakest Preconditions for Access Control
