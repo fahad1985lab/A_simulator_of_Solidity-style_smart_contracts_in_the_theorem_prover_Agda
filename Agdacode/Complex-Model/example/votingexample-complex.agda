@@ -85,9 +85,6 @@ voteAux addr (err x) candidate      = error (strErr " Undefined ")
                                       ⟨ 0 >> 0 ∙ "The message is undefined" [ nat 0 ]⟩
 
 
-
-
-
 -- Example
 testLedger : Ledger
 testLedger 1 .amount = 100
