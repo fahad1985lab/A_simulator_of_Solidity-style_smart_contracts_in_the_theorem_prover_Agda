@@ -23,10 +23,11 @@ theorem prover Agda:
 
 * In the appendix, we explain the translation of Solidity into Agda [link](https://github.com/fahad1985lab/A_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda/blob/main/Appendix_to_a_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda.pdf).
 
-* Counter example of translation Solidity into Agda in simple simulator [link](https://github.com/fahad1985lab/A_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda/blob/main/Agdacode/Simple-Model/example/solidityToagdaInsimplemodel-counterexample.agda). 
+* Counter example of translation Solidity into Agda in simple simulator [link 1](https://htmlpreview.github.io/?https://raw.githubusercontent.com/fahad1985lab/A_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda/main/Html/Simple-Model.example.solidityToagdaInsimplemodel-counterexample.html) or [link 2](https://github.com/fahad1985lab/A_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda/blob/main/Agdacode/Simple-Model/example/solidityToagdaInsimplemodel-counterexample.agda). 
 
-* Voting example of translation Solidity into Agda in complex simulator [link](https://github.com/fahad1985lab/A_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda/blob/main/Agdacode/Complex-Model/example/solidityToagdaIncomplexmodel-votingexample.agda).
+* Voting example of translation Solidity into Agda in complex simulator [link 1](https://htmlpreview.github.io/?https://raw.githubusercontent.com/fahad1985lab/A_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda/main/Html/Complex-Model.example.solidityToagdaIncomplexmodel-votingexample.html) or [link 2](https://github.com/fahad1985lab/A_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda/blob/main/Agdacode/Complex-Model/example/solidityToagdaIncomplexmodel-votingexample.agda).
 
+* Library for voting example in complex model [link 1](https://htmlpreview.github.io/?https://raw.githubusercontent.com/fahad1985lab/A_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda/main/Html/libraries.ComplexModelLibrary.html) or [link 2](https://github.com/fahad1985lab/A_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda/blob/main/Agdacode/libraries/ComplexModelLibrary.agda).
 
 ## Previous publications:
  

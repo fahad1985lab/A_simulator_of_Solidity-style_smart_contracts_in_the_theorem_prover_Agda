@@ -73,8 +73,12 @@ open import Complex-Model.ledgerversion.Ledger-Complex-Model-improved-non-termin
 -- ####################################
 -- For appendix to a simulator of Solidity-style smart contracts in the theorem prover Agda
 
--- The appendix is available at this git repository
+-- The appendix is available at
+-- (https://github.com/fahad1985lab/A_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda/blob/main/Appendix_to_a_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda.pdf)
+
+-- Git repository
 -- (https://github.com/fahad1985lab/A_simulator_of_Solidity-style_smart_contracts_in_the_theorem_prover_Agda)
+
 
 -- A TRANSLATON OF SOLIDITY INTO AGDA
 
