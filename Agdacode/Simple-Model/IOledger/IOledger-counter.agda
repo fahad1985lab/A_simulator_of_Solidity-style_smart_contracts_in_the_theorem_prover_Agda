@@ -20,7 +20,7 @@ open import interface.Unit
 open import interface.NativeIO
 open import interface.Base
 open import Data.Maybe.Base as Maybe using (Maybe; nothing; _<∣>_; when)
-import Data.Maybe.Categorical as Maybe
+import Data.Maybe.Effectful
 open import interface.ConsoleLib
 
 

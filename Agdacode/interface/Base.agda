@@ -6,7 +6,7 @@ open import Data.Maybe.Base hiding ( _>>=_ )
 open import Data.Sum renaming (inj₁ to left; inj₂ to right; [_,_]′ to either)
 
 
-open import Function
+open import Function hiding (force)
 open import Size
 open import Data.List
 open import interface.Object

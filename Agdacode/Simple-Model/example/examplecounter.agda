@@ -26,28 +26,11 @@ const : ℕ → (Msg → SmartContract Msg)
 const n msg = return (nat n)
 
 
-
-mutual
-  contract0 : FunctionName → (Msg → SmartContract Msg)
-  contract0 "f1" = const 0
-  contract0 "g1" = def-g1
-  contract0 ow ow' = error (strErr " Error msg")
-
-  def-g1 : Msg → SmartContract Msg
-  def-g1 (nat x)  = exec currentAddrLookupc λ addr → call 0 "f1" (nat 0)
-  def-g1 (list x) = exec currentAddrLookupc (λ n → exec (updatec "f1" (const (suc n))) λ _ → return (nat n))
-    
-
 -- test our ledger with our example
 testLedger : Ledger
 
+-- the example below we used in our paper
 testLedger 0 .amount  = 20
-testLedger 0 .fun "f1" m  = const 0 (nat 0)
-testLedger 0 .fun "g1" m  = def-g1(nat 0)
-testLedger 0 .fun "k1" m  = exec (getAmountc 0) (λ n → return (nat n))
-testLedger 0 .fun  ow ow' = error (strErr "Undefined")
-
--- the example belw we used in our paper
 testLedger 1 .amount             = 40
 testLedger 1 .fun "counter" m   = const 0 (nat 0)
 testLedger 1 .fun "increment" m  = exec currentAddrLookupc  λ addr →

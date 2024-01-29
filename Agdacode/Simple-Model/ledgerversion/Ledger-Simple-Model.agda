@@ -1,4 +1,3 @@
---@PREFIX@simpleModelledger
 module Simple-Model.ledgerversion.Ledger-Simple-Model where
 
 open import Data.Nat
